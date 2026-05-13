@@ -163,28 +163,27 @@
             50% { transform: translateY(-20px) scale(1.05); }
         }
 
-        /* --- NUEVOS EFECTOS NEÓN Y LOGO --- */
+        /* --- NUEVOS EFECTOS NEÓN PARA IMAGEN Y TEXTO --- */
         
-        /* Animación del Icono de Pantalla */
-        .screen-icon-container {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            border: 1.5px solid #0ea5e9;
-            box-shadow: 0 0 8px rgba(14, 165, 233, 0.3), inset 0 0 10px rgba(14, 165, 233, 0.1);
-            animation: borderFlicker 3s infinite alternate;
-        }
-        @keyframes borderFlicker {
-            0%, 100% { box-shadow: 0 0 8px rgba(14, 165, 233, 0.3), inset 0 0 10px rgba(14, 165, 233, 0.1); border-color: #0ea5e9; }
-            50% { box-shadow: 0 0 15px rgba(14, 165, 233, 0.6), inset 0 0 15px rgba(14, 165, 233, 0.3); border-color: #38bdf8; }
+        /* Efecto de baño Neón para la imagen del logo */
+        .neon-logo-img {
+            /* Usamos drop-shadow para que el resplandor siga la forma de la imagen (PNG transparente) */
+            filter: drop-shadow(0 0 5px rgba(14, 165, 233, 0.8)) 
+                    drop-shadow(0 0 15px rgba(14, 165, 233, 0.5));
+            animation: imageNeonPulse 3s infinite alternate;
+            transition: filter 0.3s ease, transform 0.3s ease;
         }
 
-        /* Efecto Escaneo dentro de la pantalla */
-        .scanline {
-            background: linear-gradient(to bottom, transparent, rgba(14, 165, 233, 0.3), transparent);
-            animation: scan 2.5s linear infinite;
-        }
-        @keyframes scan {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
+        @keyframes imageNeonPulse {
+            0%, 100% { 
+                filter: drop-shadow(0 0 5px rgba(14, 165, 233, 0.6)) 
+                        drop-shadow(0 0 10px rgba(14, 165, 233, 0.3)); 
+            }
+            50% { 
+                filter: drop-shadow(0 0 8px rgba(14, 165, 233, 1)) 
+                        drop-shadow(0 0 20px rgba(14, 165, 233, 0.8))
+                        drop-shadow(0 0 30px rgba(56, 189, 248, 0.5)); 
+            }
         }
 
         /* Aparición letra por letra (Flicker) */
@@ -216,10 +215,16 @@
             100% { opacity: 1; text-shadow: 0 0 10px #0ea5e9, 0 0 20px rgba(14, 165, 233, 0.6); }
         }
 
-        /* Hover general sobre el logo para intensificar el neón */
+        /* Hover general sobre el logo container */
         .logo-container:hover .neon-letter.life {
             text-shadow: 0 0 15px #0ea5e9, 0 0 30px #0ea5e9, 0 0 40px #38bdf8;
             transition: text-shadow 0.3s ease;
+        }
+        
+        .logo-container:hover .neon-logo-img {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 10px rgba(14, 165, 233, 1)) 
+                    drop-shadow(0 0 25px rgba(56, 189, 248, 0.9));
         }
 
 
@@ -262,13 +267,12 @@
     <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-nav" id="main-nav">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
             
-            <!-- LOGO ANIMADO NEÓN Y PANTALLA -->
+            <!-- LOGO ANIMADO NEÓN CON IMAGEN -->
             <a href="#inicio" class="flex items-center gap-3 outline-none group logo-container">
-                <!-- Contenedor Icono Monitor -->
-                <div class="screen-icon-container w-9 h-9 rounded flex items-center justify-center relative overflow-hidden">
-                    <i data-lucide="monitor" class="w-5 h-5 text-brand-400 absolute z-10 transition-transform group-hover:scale-110 duration-300 group-hover:text-white"></i>
-                    <!-- Linea de escaneo holográfico -->
-                    <div class="scanline absolute inset-0 w-full h-full z-20"></div>
+                <!-- Imagen del Logo con efecto Neón (drop-shadow) -->
+                <!-- REEMPLAZA EL SRC CON LA RUTA EXACTA DE TU LOGO (ej. assets/favicon.png) -->
+                <div class="w-10 h-10 flex items-center justify-center">
+                    <img src="assets/logo_claro.png" alt="LycodeLife Logo" class="neon-logo-img w-full h-full object-contain" onerror="this.src='https://placehold.co/100x100/0f172a/0ea5e9?text=L'">
                 </div>
                 
                 <!-- Texto con aparición secuencial y Neón -->
