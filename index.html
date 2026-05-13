@@ -139,7 +139,7 @@
             box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
         }
 
-        /* ANIMACIONES */
+        /* ANIMACIONES BASICAS */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
@@ -162,6 +162,66 @@
             0%, 100% { transform: translateY(0) scale(1); }
             50% { transform: translateY(-20px) scale(1.05); }
         }
+
+        /* --- NUEVOS EFECTOS NEÓN Y LOGO --- */
+        
+        /* Animación del Icono de Pantalla */
+        .screen-icon-container {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border: 1.5px solid #0ea5e9;
+            box-shadow: 0 0 8px rgba(14, 165, 233, 0.3), inset 0 0 10px rgba(14, 165, 233, 0.1);
+            animation: borderFlicker 3s infinite alternate;
+        }
+        @keyframes borderFlicker {
+            0%, 100% { box-shadow: 0 0 8px rgba(14, 165, 233, 0.3), inset 0 0 10px rgba(14, 165, 233, 0.1); border-color: #0ea5e9; }
+            50% { box-shadow: 0 0 15px rgba(14, 165, 233, 0.6), inset 0 0 15px rgba(14, 165, 233, 0.3); border-color: #38bdf8; }
+        }
+
+        /* Efecto Escaneo dentro de la pantalla */
+        .scanline {
+            background: linear-gradient(to bottom, transparent, rgba(14, 165, 233, 0.3), transparent);
+            animation: scan 2.5s linear infinite;
+        }
+        @keyframes scan {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
+        /* Aparición letra por letra (Flicker) */
+        .neon-letter {
+            opacity: 0;
+            display: inline-block;
+            animation: flickerAppear 0.6s forwards;
+        }
+        @keyframes flickerAppear {
+            0% { opacity: 0; }
+            10% { opacity: 1; text-shadow: 0 0 10px #0ea5e9; }
+            20% { opacity: 0; text-shadow: none; }
+            30% { opacity: 1; text-shadow: 0 0 15px #0ea5e9; }
+            40% { opacity: 0.3; }
+            50% { opacity: 1; text-shadow: 0 0 5px #0ea5e9; }
+            100% { opacity: 1; text-shadow: none; }
+        }
+
+        /* Aparición y Brillo constante para la palabra "Life" */
+        .neon-letter.life {
+            color: #0ea5e9;
+            animation: flickerAppearLife 0.8s forwards;
+        }
+        @keyframes flickerAppearLife {
+            0% { opacity: 0; text-shadow: none; }
+            10% { opacity: 1; text-shadow: 0 0 20px #0ea5e9, 0 0 40px #0ea5e9; }
+            20% { opacity: 0; text-shadow: none; }
+            30% { opacity: 1; text-shadow: 0 0 20px #0ea5e9, 0 0 40px #0ea5e9; }
+            100% { opacity: 1; text-shadow: 0 0 10px #0ea5e9, 0 0 20px rgba(14, 165, 233, 0.6); }
+        }
+
+        /* Hover general sobre el logo para intensificar el neón */
+        .logo-container:hover .neon-letter.life {
+            text-shadow: 0 0 15px #0ea5e9, 0 0 30px #0ea5e9, 0 0 40px #38bdf8;
+            transition: text-shadow 0.3s ease;
+        }
+
 
         /* BOTONES CON PSICOLOGÍA UI */
         .btn-primary {
@@ -202,11 +262,27 @@
     <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-nav" id="main-nav">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
             
-            <!-- LOGO SIN CONSULTING -->
-            <a href="#inicio" class="flex items-center gap-3 outline-none group">
-                <div class="w-8 h-8 bg-brand-900 rounded flex items-center justify-center text-white font-bold shadow-md">L</div>
-                <div class="flex items-center">
-                    <span class="font-bold text-xl tracking-tight text-brand-900">LycodeLife</span>
+            <!-- LOGO ANIMADO NEÓN Y PANTALLA -->
+            <a href="#inicio" class="flex items-center gap-3 outline-none group logo-container">
+                <!-- Contenedor Icono Monitor -->
+                <div class="screen-icon-container w-9 h-9 rounded flex items-center justify-center relative overflow-hidden">
+                    <i data-lucide="monitor" class="w-5 h-5 text-brand-400 absolute z-10 transition-transform group-hover:scale-110 duration-300 group-hover:text-white"></i>
+                    <!-- Linea de escaneo holográfico -->
+                    <div class="scanline absolute inset-0 w-full h-full z-20"></div>
+                </div>
+                
+                <!-- Texto con aparición secuencial y Neón -->
+                <div class="flex items-center text-xl font-extrabold tracking-tight">
+                    <span class="neon-letter text-brand-900" style="animation-delay: 0.1s">L</span>
+                    <span class="neon-letter text-brand-900" style="animation-delay: 0.15s">y</span>
+                    <span class="neon-letter text-brand-900" style="animation-delay: 0.2s">c</span>
+                    <span class="neon-letter text-brand-900" style="animation-delay: 0.25s">o</span>
+                    <span class="neon-letter text-brand-900" style="animation-delay: 0.3s">d</span>
+                    <span class="neon-letter text-brand-900" style="animation-delay: 0.35s">e</span>
+                    <span class="neon-letter life" style="animation-delay: 0.4s">L</span>
+                    <span class="neon-letter life" style="animation-delay: 0.45s">i</span>
+                    <span class="neon-letter life" style="animation-delay: 0.5s">f</span>
+                    <span class="neon-letter life" style="animation-delay: 0.55s">e</span>
                 </div>
             </a>
 
@@ -215,16 +291,7 @@
                 <a href="#casos-exito" class="text-sm font-semibold text-slate-600 hover:text-brand-600 transition-colors">Resultados</a>
                 <a href="#soluciones" class="text-sm font-semibold text-slate-600 hover:text-brand-600 transition-colors">Soluciones</a>
                 
-                <!-- Idioma -->
-                <div class="relative group cursor-pointer">
-                    <span class="flex items-center gap-1 text-sm font-semibold text-slate-600 hover:text-brand-600 transition-colors py-2">
-                        ES <i data-lucide="chevron-down" class="w-3 h-3 ml-1"></i>
-                    </span>
-                    <div class="absolute right-0 top-full w-24 bg-white border border-slate-200 rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden">
-                        <a href="/" class="block px-4 py-2 text-sm text-brand-900 bg-slate-50 font-bold">ES</a>
-                        <a href="/en/" class="block px-4 py-2 text-sm text-slate-500 hover:bg-slate-50 hover:text-brand-600 transition-colors">EN</a>
-                    </div>
-                </div>
+                <!-- EL BOTÓN DE IDIOMA HA SIDO ELIMINADO AQUÍ -->
                 
                 <button onclick="toggleContactModal()" class="px-5 py-2.5 btn-primary rounded-xl font-bold text-sm">Quiero Automatizar</button>
             </div>
